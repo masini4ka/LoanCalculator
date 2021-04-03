@@ -1,0 +1,55 @@
+<div class="form-container">
+    <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label> income</mat-label>
+            <input matInput type="number" formControlName="monthlyIncome" required>
+            <span matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
+            <span matSuffix>.00</span>
+
+            <mat-error *ngIf="loanForm.controls.monthlyIncome.touched && loanForm.controls.monthlyIncome.invalid">
+                <span *ngIf="loanForm.controls.monthlyIncome.errors!.required">This field is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="requestedAmount" required>
+            <span matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
+            <span matSuffix>.00</span>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Loan Term in Months</mat-label>
+            <input type="number" matInput formControlName="loanTerm" required>
+            <mat-error *ngIf="loanForm.controls.loanTerm.touched && loanForm.controls.loanTerm.invalid">
+                <span *ngIf="loanForm.controls.loanTerm.errors!.required">This field is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Children</mat-label>
+            <mat-select ngDefaultControl formControlName="children">
+                <mat-option *ngFor="let option of childrenOptions" [value]="option.value">
+                    {{option.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Co-Applicants</mat-label>
+            <mat-select ngDefaultControl formControlName="coapplicant">
+                <mat-option *ngFor="let option of coaplicantOptions" [value]="option.value">
+                    {{option.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-button color="primary" type="submit" [disabled]="!loanForm.valid">Submit</button>
+    </form>
+</div>
+
+<!-- <div class="Result" *ngIf="loanInfo$ | async; let loan">
+    <p>{{loan.interestRate}}</p>
+    <p>{{loan.loanAmount}}</p>
+</div> -->
