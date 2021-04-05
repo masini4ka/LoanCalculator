@@ -13,7 +13,7 @@ Clone git repo git clone `https://github.com/masini4ka/LoanCalculator.git` <br>
 Locate to project directory `cd loancalc` <br>
 Install dependencies `npm install` <br>
 Run application `npm start` <br>
-Note: `calculator.service.ts` requires you to have an api key to get response with loan information successfully.
+Note: `src/app/calculator.ngx/calculator.service.ts` requires you to have an api key to get response with loan information successfully.
 
 ## Build
 
