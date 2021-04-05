@@ -13,8 +13,7 @@ const reducer = createReducer(
         return { ...state, LoanResult: payload, InputError: undefined };
     }),
     on(LoanActions.CalculateLoanActionFail, (state: LoanState, error: Error) => {
-        console.log(error);
-        return { ...state, InputError: error };
+        return { ...state, LoanResult: undefined, InputError: error };
     })
 );
 

@@ -1,16 +1,18 @@
 import { createAction, props } from '@ngrx/store';
 import { LoanData, LoanResult } from './calculator.model';
 
-export const GetLoanAction = createAction('[Loan Calculator] - Get Loan');
+export const ACTION_PREFIX = '[Loan Calculator]';
 
 export const CalculateLoanAction = createAction(
-    '[Loan] - Create Loan',
+    `${ACTION_PREFIX} - Calculate Loan`,
     props<{ payload: LoanData }>()
 );
 
 export const CalculateLoanActionSuccess = createAction(
-    '[Loan] - Success Get Loan',
+    `${ACTION_PREFIX} - Calculate Loan Success`,
     props<{ payload: LoanResult }>()
 );
 
-export const CalculateLoanActionFail = createAction('[Loan Calculator] - Error', props<Error>());
+export const CalculateLoanActionFail = createAction(
+    `${ACTION_PREFIX} - Calculate Loan Fail`,
+    props<Error>());
