@@ -1,29 +1,36 @@
 <div class="form-container">
     <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
-
         <mat-form-field class="form-field" appearance="outline">
-            <mat-label> income</mat-label>
-            <input matInput type="number" formControlName="monthlyIncome" required>
-            <span matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
-            <span matSuffix>.00</span>
+            <mat-label> Monthly Income</mat-label>
+            <input matInput type="number" formControlName="monthlyIncome">
+            <span class="amountInfo" matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
+            <span class="amountInfo" matSuffix>.00</span>
 
             <mat-error *ngIf="loanForm.controls.monthlyIncome.touched && loanForm.controls.monthlyIncome.invalid">
                 <span *ngIf="loanForm.controls.monthlyIncome.errors!.required">This field is mandatory.</span>
+                <span *ngIf="loanForm.controls.monthlyIncome.errors!.min">Minimum requirement is 500000 SEK</span>
             </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Amount</mat-label>
-            <input matInput type="number" formControlName="requestedAmount" required>
-            <span matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
-            <span matSuffix>.00</span>
+            <mat-label>Loan Amount</mat-label>
+            <input matInput type="number" formControlName="requestedAmount">
+            <span class="amountInfo" matPrefix>kr&nbsp;&nbsp;&nbsp; </span>
+            <span class="amountInfo" matSuffix>.00</span>
+            <mat-error *ngIf="loanForm.controls.requestedAmount.touched && loanForm.controls.requestedAmount.invalid">
+                <span *ngIf="loanForm.controls.requestedAmount.errors!.required">This field is mandatory.</span>
+                <span *ngIf="loanForm.controls.requestedAmount.errors!.min">Minimum requirement is 20000000 SEK</span>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Loan Term in Months</mat-label>
-            <input type="number" matInput formControlName="loanTerm" required>
+            <mat-label>Loan Term</mat-label>
+            <input type="number" matInput formControlName="loanTerm">
+            <span class="amountInfo" matSuffix>months</span>
             <mat-error *ngIf="loanForm.controls.loanTerm.touched && loanForm.controls.loanTerm.invalid">
                 <span *ngIf="loanForm.controls.loanTerm.errors!.required">This field is mandatory.</span>
+                <span *ngIf="loanForm.controls.loanTerm.errors!.min">Minimum period is 36 months</span>
+                <span *ngIf="loanForm.controls.loanTerm.errors!.max">Maximum period is 360 months</span>
             </mat-error>
         </mat-form-field>
 
@@ -49,7 +56,18 @@
     </form>
 </div>
 
-<!-- <div class="Result" *ngIf="loanInfo$ | async; let loan">
-    <p>{{loan.interestRate}}</p>
-    <p>{{loan.loanAmount}}</p>
-</div> -->
+<div class="result" *ngIf="loanResult$ | async; let loan">
+    <p>Loan Amount: {{loan.loanAmount}}</p>
+    <p>Interest Rate: {{loan.interestRate}}</p>
+</div>
+
+<div *ngIf="errors$ | async; let error">
+    <div *ngIf="error?.error?.general">
+        <p>{{error?.error?.general?.message}}</p>
+    </div>
+    <div *ngIf="error?.error?.fields">
+        <div *ngFor="let issue of error?.error?.fields">
+            <p>{{issue.params}}: {{issue.message}}</p>
+        </div>
+    </div>
+</div>

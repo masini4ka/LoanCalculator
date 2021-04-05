@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { take, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { CalculateLoanAction } from '../calculator.ngx/calculator.action';
-import { LoanData, LoanResult } from '../calculator.ngx/calculator.model';
+import { LoanData } from '../calculator.ngx/calculator.model';
 import LoanState from '../calculator.ngx/calculator.state';
 import { Children, Coaplicant } from '../calculator.ngx/calculator.model';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
-import { selectResult } from '../calculator.ngx/calculator.selector';
+import { LoanInfoSelector } from '../calculator.ngx/calculator.selector';
+
 export interface Select {
   value: string;
   viewValue: string;
@@ -30,9 +31,9 @@ export class CalculatorComponent implements OnInit {
   };
 
   loanForm = this.fb.group({
-    monthlyIncome: ['', Validators.required],
-    requestedAmount: ['', Validators.required],
-    loanTerm: ['', Validators.required],
+    monthlyIncome: ['', [Validators.required, Validators.min(500000)]],
+    requestedAmount: ['', [Validators.required, Validators.min(20000000)]],
+    loanTerm: ['', [Validators.required, Validators.min(36), Validators.max(360)]],
     children: ['', Validators.required],
     coapplicant: ['', Validators.required],
   });
@@ -50,37 +51,30 @@ export class CalculatorComponent implements OnInit {
     { value: Coaplicant.Multiple, viewValue: 'Multiple Co-applicants' }
   ];
 
-  // readonly loanInfo$ = this.store.pipe(
-  //   select(selectResult),
-  //   tap(result => console.error("RESULTTT", result))
-  // );
+  readonly loanResult$ = this.store.pipe(
+    select(this.loanSelector.getLoanResult()),
+    filter(x => !!x)
+  );
+
+  readonly errors$ = this.store.pipe(
+    select(this.loanSelector.getErrors()),
+    filter(x => !!x)
+  );
 
   constructor(
-    private store: Store<LoanState>,
-    private fb: FormBuilder
-  ) { }
+    private store: Store<{ loanInfo: LoanState }>,
+    private fb: FormBuilder,
+    private loanSelector: LoanInfoSelector,
+  ) {
+  }
 
   ngOnInit(): void {
     console.error(this.data);
-    // this.store.dispatch(CalculateLoanAction({ payload: this.data }));
-    // const todo$ = this.store.pipe(select('LoanData'))
-    //   .pipe(
-    //     tap(wtf => console.error("???", wtf))
-    //   )
-    //   .subscribe();
   }
 
   onSubmit() {
     console.warn(this.loanForm.value);
     this.store.dispatch(CalculateLoanAction({ payload: this.loanForm.value }));
-
-    this.store.pipe(
-      select("LoanResult"),
-      tap(result => console.error("RESULTTTWTFFFFFFFFFFFf", result))
-    ).subscribe();
   }
 
 }
-
-//"params": "monthlyIncome",
-//"message": "Monthly income is too low. Minimum income is 500 EUR"
