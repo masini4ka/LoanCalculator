@@ -13,7 +13,7 @@ Clone git repo git clone `https://github.com/masini4ka/LoanCalculator.git` <br>
 Locate to project directory `cd loancalc` <br>
 Install dependencies `npm install` <br>
 Run application `npm start` <br>
-Note: To receive loan result from the api successfully - set `apikey` environment variable.
+Note: To receive loan result from the api successfully - set `apikey` variable in `src/environments/environment.ts`.
 
 ## Build
 
