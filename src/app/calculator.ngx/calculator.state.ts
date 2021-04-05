@@ -2,9 +2,9 @@ import { LoanData, LoanResult } from "./calculator.model";
 
 
 export default class LoanState {
-    LoanData: LoanData | undefined;
-    LoanResult: LoanResult | undefined;
-    InputError: Error | undefined;
+    LoanData?: LoanData;
+    LoanResult?: LoanResult;
+    InputError?: any;
 }
 
 export const initializeState = (): LoanState => {
