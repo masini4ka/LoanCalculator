@@ -7,10 +7,13 @@ Form input validations as well as backend errors handling.
 ![image](https://user-images.githubusercontent.com/23268281/113576320-a5845d80-961f-11eb-8b2d-078ca7853b46.png)
 
 
-## Development server
+## Getting started
 
-Run `ng serve` for a dev server. <br>
-`calculator.service.ts` requires you to have an api key to be able to receive loan information successfully.
+Clone git repo git clone `https://github.com/masini4ka/LoanCalculator.git` <br>
+Locate to project directory `cd loancalc` <br>
+Install dependencies `npm install` <br>
+Run application `npm start` <br>
+Note: `calculator.service.ts` requires you to have an api key to get response with loan information successfully.
 
 ## Build
 
