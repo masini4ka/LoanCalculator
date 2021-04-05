@@ -9,11 +9,12 @@ Form input validations as well as backend errors handling.
 
 ## Development server
 
-Run `ng serve` for a dev server.
+Run `ng serve` for a dev server. <br>
+`calculator.service.ts` requires you to have an api key to be able to receive loan information successfully.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production.
 
 ## Running unit tests
 
